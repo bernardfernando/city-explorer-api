@@ -29,4 +29,17 @@ app.get("/weather", (request, res) => {
   res.json(data);
 });
 
+function filterByLatandLon(lat, lon) {
+  const city_name = data.filter((item) => item.lat == lat && item.lon == lon);
+  return city_name;
+}
+
+app.get("/city", (request, response) => {
+  let dataToReturn = data;
+  if (request.query.lat && request.query.lon) {
+    dataToReturn = filterByLatandLon(request.query.lat, request.query.lon);
+  }
+  response.json(dataToReturn);
+});
+
 app.listen(PORT, () => console.log(`app is running on port ${PORT}`));
